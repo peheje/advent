@@ -1,4 +1,4 @@
-from copy import copy
+from Timer import Timer
 
 
 class Node:
@@ -7,7 +7,7 @@ class Node:
         self.child_names = child_names  # List<String>
         self.children = {}  # Dictionary<String, Node>
         self.weight = weight  # Int
-        self.tower_w = 0  # Int
+        self.tower_weight = 0  # Int
 
 
 def read_nodes(lines):
@@ -18,6 +18,12 @@ def read_nodes(lines):
         weight = int(split[1].replace("(", "").replace(")", ""))
         parents = [x.replace(",", "") for x in split[3:]]
         nodes[name] = Node(name, parents, weight)
+
+    # To references
+    for name, node in nodes.items():
+        for cname in node.child_names:
+            node.children[cname] = nodes[cname]
+
     return nodes
 
 
@@ -33,14 +39,14 @@ def find_root(nodes):
     return None
 
 
-def children_weight(nodes, node):
+def calc_tower_weights(nodes, node):
     # Call once with node=root
     if len(node.children) > 0:
-        s = sum(children_weight(nodes, cnode) for cnode in node.children.values())
-        node.tower_w = s + node.weight
-        return node.tower_w
+        s = sum(calc_tower_weights(nodes, cnode) for cnode in node.children.values())
+        node.tower_weight = s + node.weight
+        return node.tower_weight
     else:
-        node.tower_w = node.weight
+        node.tower_weight = node.weight
         return node.weight
 
 
@@ -57,10 +63,10 @@ def find_wrong_weight(nodes, node):
     # We cannot do it on leaf nodes
     if len(node.children) > 0:
         # Check if all children has same tower_weight
-        tower_weights = [x.tower_w for x in node.children.values()]
+        tower_weights = [x.tower_weight for x in node.children.values()]
         if not len(set(tower_weights)) == 1:
             # Iterating dictionaries not guaranteed to be same each time, so need to use tuples
-            uneven_weights = [(x.weight, x.tower_w) for x in list(node.children.values())]
+            uneven_weights = [(x.weight, x.tower_weight) for x in list(node.children.values())]
             correct_weight(uneven_weights)
             balanced = True
 
@@ -85,20 +91,10 @@ def correct_weight(uneven_weights):
 with open("../data/7.txt") as f:
     lines = [x.replace("\n", "") for x in f.readlines()]
 
-nodes = read_nodes(lines)
-
-# To references
-for name, node in nodes.items():
-    for cname in node.child_names:
-        node.children[cname] = nodes[cname]
-
-# Find root
-root = find_root(nodes)
-print("pt1", root.name)
-
-# Find tower weights
-
-children_weight(nodes, root)
-
-balanced = False
-find_wrong_weight(nodes, root)
+with Timer():
+    nodes = read_nodes(lines)
+    root = find_root(nodes)
+    print("pt1", root.name)
+    calc_tower_weights(nodes, root)
+    balanced = False
+    find_wrong_weight(nodes, root)
