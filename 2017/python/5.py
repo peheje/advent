@@ -18,8 +18,6 @@ def part1(steps):
         steps[pos] += 1
         pos += offset
         n_steps += 1
-        if pos < 0 or pos >= len(steps):
-            break
     return n_steps
 
 
@@ -35,8 +33,6 @@ def part2(steps):
             steps[pos] += 1
         pos += offset
         n_steps += 1
-        if pos < 0 or pos >= len(steps):
-            break
     return n_steps
 
 
