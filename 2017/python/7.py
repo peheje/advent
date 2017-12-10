@@ -72,14 +72,9 @@ def find_wrong_weight(nodes, node):
 
 
 def correct_weight(uneven_weights):
-    tmp = [list(t) for t in zip(*uneven_weights)]
-    weights = tmp[0]
-    tower_weights = tmp[1]
+    weights, tower_weights = [list(t) for t in zip(*uneven_weights)]
 
-    # Find the wrong value and its index
-    wrong_tuple = next((i, x) for i, x in enumerate(tower_weights) if tower_weights.count(x) == 1)
-    wrong_idx = wrong_tuple[0]
-    wrong_tower_value = wrong_tuple[1]
+    wrong_idx, wrong_tower_value = next((i, x) for i, x in enumerate(tower_weights) if tower_weights.count(x) == 1)
 
     # Get a correct tower value and calculate correct weight for wrong weight
     correct_tower_weight = tower_weights[(wrong_idx + 1) % len(tower_weights)]
