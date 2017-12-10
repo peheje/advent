@@ -69,15 +69,17 @@ def correct_weight(uneven_weights):
     tmp = [list(t) for t in zip(*uneven_weights)]
     weights = tmp[0]
     tower_weights = tmp[1]
-    diffs = list(set(x - y for x in tower_weights for y in tower_weights if x - y != 0))
 
-    for d in diffs:
-        for i, w in enumerate(weights):
-            cpy_tower_weights = copy(tower_weights)
-            cpy_tower_weights[i] += d
-            if all(x == cpy_tower_weights[0] for x in cpy_tower_weights):
-                print("pt2", w + d)
-                return
+    # Find the wrong value and its index
+    wrong_tuple = next((i, x) for i, x in enumerate(tower_weights) if tower_weights.count(x) == 1)
+    wrong_idx = wrong_tuple[0]
+    wrong_tower_value = wrong_tuple[1]
+
+    # Get a correct tower value and calculate correct weight for wrong weight
+    correct_tower_weight = tower_weights[(wrong_idx + 1) % len(tower_weights)]
+    correct_weight = weights[wrong_idx] + correct_tower_weight - wrong_tower_value
+
+    print("pt2", correct_weight)
 
 
 with open("../data/7.txt") as f:
