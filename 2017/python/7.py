@@ -4,6 +4,7 @@ class Node:
         self.child_names = child_names  # List<String>
         self.children = {}  # Dictionary<String, Node>
         self.weight = weight  # Int
+        self.tower_weight = 0  # Int
 
 
 def read_nodes(lines):
@@ -29,6 +30,23 @@ def find_root(nodes):
     return None
 
 
+def children_weight(nodes, node):
+    # Call once with node=root
+    if len(node.children) > 0:
+        s = sum(children_weight(nodes, cnode) for _, cnode in node.children.items())
+        node.tower_weight = s + node.weight
+        return node.tower_weight
+    else:
+        return node.weight
+
+
+def find_wrong_weight(nodes):
+    for name, node in nodes.items():
+        if len(node.children) > 0:
+            if not all(x.tower_weight == node.children[0].tower_weight for x in node.children):
+                pass
+
+
 with open("../data/7.txt") as f:
     lines = [x.replace("\n", "") for x in f.readlines()]
 
@@ -42,4 +60,8 @@ for name, node in nodes.items():
 # Find root
 root = find_root(nodes)
 print("pt1", root.name)
-d = 0
+
+# Find tower weights
+children_weight(nodes, root)
+
+d = 2
