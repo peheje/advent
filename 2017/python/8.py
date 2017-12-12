@@ -10,8 +10,6 @@ for line in lines:
     tokens = line.split(" ")
     var_name, operation, operation_val, condition_var, condition, condition_val = tokens[0], tokens[1], tokens[2], tokens[4], tokens[5], tokens[6]
 
-
-
     print(line)
     print("var_name", var_name)
     print("operation", operation)
@@ -20,3 +18,14 @@ for line in lines:
     print("condition", condition)
     print("condition_val", condition_val)
     print("_____")
+
+    code = "{} {} {}".format(memory[condition_var], condition, memory[condition_val])
+    boolean = eval(code)
+    if boolean:
+        value = int(operation_val)
+        if operation == "dec":
+            value = -value
+        code = "memory['{}'] += {}".format(var_name, value)
+        exec(code)
+
+print(max(memory.values()))
