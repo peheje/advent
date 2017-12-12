@@ -4,6 +4,7 @@ with open("../data/8.txt") as f:
     lines = [x.replace("\n", "") for x in f.readlines()]
 
 memory = defaultdict(int)
+highest = -1e6
 
 for line in lines:
     tokens = line.split(" ")
@@ -14,5 +15,9 @@ for line in lines:
         value = -int(operation_val) if operation == "dec" else int(operation_val)
         code = "memory['{}'] += {}".format(var_name, value)
         exec(code)
+        if memory[var_name] > highest:
+            highest = memory[var_name]
 
-print(max(memory.values()))
+
+print("pt1", max(memory.values()))
+print("pt2", highest)
