@@ -1,19 +1,9 @@
 with open("../data/9.txt") as f:
     data = f.readline()
 
-# data = "{{<a!>},{<a!>},{<a!>},{<ab>}}"
-# data = "{{<!!>},{<!!>},{<!!>},{<!!>}}"
-# data = "{<<<<>}"
-# data = "{<random characters>}"
-# data = "{<{!>}>}"
-# data = "{<!!!>>}"
-# data = "{<{o\"i!a,<{i<a>}"
-# <,,!u!!!>"!>},<,!!'!>,<!!!>,<eu!>},<'{<u>
 
-
-def is_valid(string: str, symbol_idx: int):
+def is_valid(string: str, idx: int):
     exclamations = 0
-    idx = symbol_idx
     while idx > 0:
         idx -= 1
         if string[idx] == "!":
@@ -40,16 +30,9 @@ def remove_garbage(string: str):
             search_begin += 1
             end_idx = string.index(">", start_idx + search_begin)
 
-        assert start_idx > 0 and end_idx > 0
-        # print(start_idx, end_idx)
-
         # Remove garbage
-        # print("before", string)
         removed = string[start_idx:end_idx + 1]
         string = string[:start_idx] + string[end_idx + 1:]
-        # print("removing", removed)
-        # print("after", string)
-
         n_removed += count_valid_removed(removed)
     return string, n_removed
 
@@ -75,6 +58,5 @@ def count_groups(string: str):
 
 
 cleaned, n_removed = remove_garbage(data)
-print("cleaned", cleaned)
 print("pt1", count_groups(cleaned))
 print("pt2", n_removed)
