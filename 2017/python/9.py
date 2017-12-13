@@ -8,6 +8,7 @@ with open("../data/9.txt") as f:
 # data = "{<{!>}>}"
 # data = "{<!!!>>}"
 # data = "{<{o\"i!a,<{i<a>}"
+# <,,!u!!!>"!>},<,!!'!>,<!!!>,<eu!>},<'{<u>
 
 
 def is_valid(string: str, symbol_idx: int):
@@ -43,8 +44,12 @@ def remove_garbage(string: str):
         # print(start_idx, end_idx)
 
         # Remove garbage
-        string = string[:start_idx] + string[end_idx + 1:]
+        # print("before", string)
         removed = string[start_idx:end_idx + 1]
+        string = string[:start_idx] + string[end_idx + 1:]
+        # print("removing", removed)
+        # print("after", string)
+
         n_removed += count_valid_removed(removed)
     return string, n_removed
 
@@ -52,7 +57,7 @@ def remove_garbage(string: str):
 def count_valid_removed(removed: str):
     valid = -2
     for i, c in enumerate(removed):
-        if is_valid(data, i) and c != "!":
+        if is_valid(removed, i) and c != "!":
             valid += 1
     return valid
 
