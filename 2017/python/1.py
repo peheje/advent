@@ -8,9 +8,9 @@ def equals_partner(x, arr, offset):
 
 # Part 1
 pt1 = [x for i, x in enumerate(ints) if equals_partner(x, ints, offset=1 + i)]
-print(sum(pt1))
+print("pt1", sum(pt1))
 
 # Part 2
 halfway = len(ints) // 2
 pt2 = [x for i, x in enumerate(ints) if equals_partner(x, ints, offset=halfway + i)]
-print(sum(pt2))
+print("pt2", sum(pt2))

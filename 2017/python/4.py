@@ -35,9 +35,6 @@ def part2():
     return n_valid
 
 
-
-
-
-print("part1", part1())
-print("part2", part2())
+print("pt1", part1())
+print("pt2", part2())
 

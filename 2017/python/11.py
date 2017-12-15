@@ -13,14 +13,14 @@ class Position:
         return "({}:{})".format(self.x, self.y)
 
     def distance(self):
-        # Take diagonal steps towards self.x == 0
+        # Take diagonal steps towards self.x == 0.
         steps = abs(self.x)
-        # Diagonal steps changes y too:
+        # Move y closer to 0 by steps (but never go too far)
         if self.y > 0:
-            # Might still be positive, but never negative (never go too far)
+            # Might still be positive, but never negative.
             y = max(self.y - steps, 0)
         else:
-            # Might still be negative, but not positive (never go too far)
+            # Might still be negative, but not positive.
             y = min(self.y + steps, 0)
         # You move 2 positions north/south by a single move so divide y's by 2
         return abs(y) // 2 + abs(steps)
@@ -49,6 +49,5 @@ for move_str in moves:
     if dist > farthest:
         farthest = dist
 
-print(pos)
 print("pt1", pos.distance())
 print("pt2", farthest)
