@@ -12,7 +12,7 @@ class Position:
     def distance(self):
         # Take diagonal steps towards self.x == 0
         steps = abs(self.x)
-        # Move y closer to 0 by steps (but never go too far)
+        # y moves closer to 0 by steps because moving diagonal, but never moving too far
         if self.y > 0:
             # Might still be positive, but never negative
             y = max(self.y - steps, 0)
