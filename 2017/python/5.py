@@ -7,8 +7,7 @@ with open("../data/5.txt") as f:
     steps = [int(row.replace("\n", "")) for row in f.readlines()]
 
 
-# steps = [0, 3, 0, 1, -3]
-
+# If you do not have numba, you can outcomment the decorator, will just take much longer to run
 @nb.njit(cache=True)
 def part1(steps):
     n_steps = 0
