@@ -1,4 +1,15 @@
+# Ignore all
+*
+
+# Unignore all with extensions
+!*.*
+
+# Unignore all dirs
+!*/
+
+
 # Byte-compiled / optimized / DLL files
+nimcache
 __pycache__/
 *.py[cod]
 *$py.class

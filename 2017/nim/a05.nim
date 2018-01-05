@@ -2,12 +2,12 @@ import strutils
 import times, os
 
 var steps = newSeq[int]()
-for line in lines r"C:\Users\Peter\gitrepos\advent\2017\data\5.txt":
+for line in lines r"/Users/phj/GitRepos/advent/2017/data/5.txt":
     steps.add(parseint(line))
 # echo steps
 
 proc part1(steps: var seq[int]): int =
-    var 
+    var
         n_steps = 0
         pos = 0
     while -1 < pos and pos < len(steps):
@@ -43,4 +43,4 @@ var steps2: seq[int]
 deep_copy(steps2, steps)
 echo "pt2 ", part2(steps2)
 let t1 =  cpuTime()
-echo "***** Time elapsed for Nim: ", $(t1 - t0)
+echo "Pt2 Time elapsed for Nim: ", $(t1 - t0)
